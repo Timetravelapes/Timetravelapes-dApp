@@ -16,7 +16,7 @@ export default function Header() {
         <div>
           <Link href="/" passHref role="button">
             <img
-              src={`/public/icons/Homeicon.png`}
+              src={`/Homeicon.png`}
               alt="Home"
               width={40}
               height={40}
