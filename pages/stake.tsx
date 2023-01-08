@@ -68,7 +68,7 @@ const Stake: NextPage = () => {
           onClick={() => router.push(`/stakered`)}
         >
           {/* Staking RED PILL */}
-          <img src={`/icons/red.webp`} alt="drop" />
+          <img src={`/icons/RED.webp`} alt="drop" />
           <h2 className={styles.selectBoxTitle}>BTC Red Pill</h2>
           <p className={styles.selectBoxDescription}>
             get every hour <b>1,0</b> TTA
