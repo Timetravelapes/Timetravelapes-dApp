@@ -16,7 +16,7 @@ const Mint: NextPage = () => {
           onClick={() => router.push(`/redpill`)}
         >
           {/* Mint Red Pill */}
-            <img src={`/icons/red.webp`} alt="drop" />
+            <img src={`/icons/RED.webp`} alt="drop" />
             <h2 className={styles.selectBoxTitle1}>Mint BTC Red Pill</h2>
             <p className={styles.selectBoxDescription1}>
             *4500 TTA Token releas 0,10$ *One 3D NFT for Blockchain Gaming *100/1000 NFTs have 450$ Amazon Coupon included *100/1000 NFTs have 0,01BTC included *70% APY by Stake TTA *Access to Metaverse *Stake your NFT
