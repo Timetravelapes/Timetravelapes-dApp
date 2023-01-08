@@ -1,354 +1,246 @@
-# NFT Staking App
-
-**Disclaimer**: This smart contract is not tested or audited by thirdweb. It is not intended for production use cases.
+# Marketplace With Next.JS
 
 ## Introduction
 
-This example demonstrates a use of several thirdweb tools to create an NFT Staking application. In this example, users can stake their ERC721 NFTs and earn ERC20 tokens as a reward. It combines:
+In this guide, you will learn how to create a marketplace like [OpenSea](https://opensea.io/) on the Goerli Ethereum test network!
 
-1. [thirdweb's NFT Drop Contract](https://portal.thirdweb.com/pre-built-contracts/nft-drop)
-2. [thirdweb's Token Contract](https://portal.thirdweb.com/pre-built-contracts/token)
-3. A modified version of this [NFT Staking Smart Contract](https://github.com/andreitoma8/ERC721-Staking) by [andreitoma8](https://github.com/andreitoma8/ERC721-Staking)
+By the end, we'll implement the following features:
 
-We deploy the NFT Staking Smart contract using [thirdweb deploy](https://portal.thirdweb.com/thirdweb-deploy) and interact with all three of the contracts using the thirdweb [TypeScript](https://portal.thirdweb.com/typescript) and [React](https://portal.thirdweb.com/react) SDKs.
+- A marketplace where we can list NFTs for **direct sale** or for **auction**.
+- Allow users to **make bids** and **buy** our NFTs.
 
-**Check out the Demo here**: https://nft-staking-contract.thirdweb-example.com/
+**Check out the Demo here**: https://marketplace.thirdweb-example.com
 
 ## Tools
 
-- [**thirdweb Deploy**](https://portal.thirdweb.com/thirdweb-deploy): Deploy our `StakingContract.sol` smart contract with zero configuration by running `npx thirdweb deploy`.
-- [**thirdweb React SDK**](https://docs.thirdweb.com/react): to enable users to connect and disconnect their wallets with our website, and interact with our smart contracts using hooks like [useNFTDrop](https://portal.thirdweb.com/react/react.usenftdrop), [useToken](https://portal.thirdweb.com/react/react.usetoken), and [useContract](https://portal.thirdweb.com/react/react.usecontract).
+- [**thirdweb Marketplace**](https://portal.thirdweb.com/contracts/marketplace): to facilitate the listing of NFTs and enable users to make buy, sell, or make offers on the NFTs on the marketplace.
+- [**thirdweb NFT Collection**](https://portal.thirdweb.com/contracts/nft-collection): to create an ERC721 NFT Collection that we can list onto the marketplace.
+- [**thirdweb React SDK**](https://docs.thirdweb.com/react): to enable users to connect and disconnect their wallets with our website, and access hooks such as [useContract](https://portal.thirdweb.com/react/react.usecontract) and [useActiveListings](https://portal.thirdweb.com/react/react.useactivelistings) to interact with the marketplace.
+- [**thirdweb TypeScript SDK**](https://docs.thirdweb.com/typescript): to connect to our marketplace smart contract, create new listings, make offers and buy listings!
+- [**Next JS Dynamic Routes**](https://nextjs.org/docs/routing/dynamic-routes): so we can have a dynamic route for each listing. eg. `listing/1` will show listing 1.
 
 ## Using This Repo
 
-- Create a copy of this repo by running the below command:
+Create a project using this example by running:
 
 ```bash
-npx thirdweb create --template nft-staking-app
+npx thirdweb create --template marketplace
 ```
 
-- Deploy the `StakingContract.sol` smart contract by running the below command from the root of the project directory:
+- Create your own Marketplace contract via the thirdweb dashboard. (Follow the steps in the guide below if you need extra help)!
 
-```bash
-npx thirdweb deploy
+- Replace all instances of our Marketplace contract address with your own, (wherever you see the `useContract` hook).
+
+Need More help? Want to understand the code a bit more? Want to set the project up yourself? Follow the guide below! 👇
+
+---
+
+## Creating A Marketplace
+
+To create a marketplace contract:
+
+- Head to the [thirdweb dashboard](https://thirdweb.com/dashboard).
+- Click **Create a new contract**.
+- Click **Setup Marketplace**.
+- Configure & Deploy!
+
+## The Thirdweb Provider
+
+The thirdweb React provider makes it straightforward to let your users connect their wallets to your website, and it abstracts away all the boilerplate you would usually have to write.
+
+Open `pages/_app.tsx` we wrap all of our pages in the `<ThirdwebProvider>` component.
+
+```tsx
+<ThirdwebProvider desiredChainId={ChainId.Goerli}>
+  <Component {...pageProps} />
+</ThirdwebProvider>
 ```
 
-- Configure the network you deployed in [`index.js`](./src/index.js):
+## Signing Users In With Their Wallets
 
-```jsx
-// This is the chainId your dApp will work on.
-const activeChainId = ChainId.Mumbai;
+We connect user's wallets to our website by using the thirdweb React SDK's [useMetamask](https://docs.thirdweb.com/react/react.usemetamask) hook.
+
+```ts
+const connectWithMetamask = useMetamask();
 ```
 
-- Run the project locally:
+## Displaying Listings On The Marketplace
 
-```bash
-npm run dev
-```
+On the [index.tsx file](./pages/index.tsx), we're displaying all of the current **active** listings on the marketplace.
 
-# Guide
+We're using React's `useState` to store the listings as well as a loading flag.
 
-In this section, we'll dive into the code and explain how it works.
-
-## NFT Staking Smart Contract
-
-The NFT Staking contract in [StakingContract.sol](./StakingContract.sol) can be broken down into three parts:
-
-1. Staking
-2. Withdrawing
-3. Rewards
-
-### Staking
-
-NFTs can be staked by users to earn rewards, and are held by the smart contract until the user withdraws them.
-
-We have two mappings to track which tokens are staked by which addresses and information about those addresses:
-
-```solidity
-    // Mapping of User Address to Staker info
-    mapping(address => Staker) public stakers;
-
-    // Mapping of Token Id to staker. Made for the SC to remeber
-    // who to send back the ERC721 Token to.
-    mapping(uint256 => address) public stakerAddress;
-```
-
-When the user calls the `stake` function on the smart contract, they smart contract transfers the NFT from their wallet to the contract:
-
-```solidity
-        // Transfer the token from the wallet to the Smart contract
-        nftCollection.transferFrom(msg.sender, address(this), _tokenId);
-```
-
-The contract keeps track of the token's staked status and which address staked this token:
-
-```solidity
-        // Create StakedToken
-        StakedToken memory stakedToken = StakedToken(msg.sender, _tokenId);
-
-        // Add the token to the stakedTokens array
-        stakers[msg.sender].stakedTokens.push(stakedToken);
-
-        // Increment the amount staked for this wallet
-        stakers[msg.sender].amountStaked++;
-
-        // Update the mapping of the tokenId to the staker's address
-        stakerAddress[_tokenId] = msg.sender;
-
-        // Update the timeOfLastUpdate for the staker
-        stakers[msg.sender].timeOfLastUpdate = block.timestamp;
-```
-
-We will talk about how the rewards system works and why we keep track of the `timeOfLastUpdate` and `amountStaked` in the **Rewards** section.
-
-### Withdrawing
-
-Withdrawing is essentially the opposite of staking.
-
-We `transfer` the token back to the wallet address that staked it (that we store in the mapping).
-
-```solidity
-        // Wallet must own the token they are trying to withdraw
-        require(stakerAddress[_tokenId] == msg.sender, "You don't own this token!");
-
-        // Transfer the token back to the withdrawer
-        nftCollection.transferFrom(address(this), msg.sender, _tokenId);
-```
-
-When the user withdraws the token, we mark the `.staker` of this token inside the user's `stakedTokens` array to be `address(0)` in order to keep track of which tokens are no longer staked, without having to remove anything from the array:
-
-```solidity
-
-        // Find the index of this token id in the stakedTokens array
-        uint256 index = 0;
-        for (uint256 i = 0; i < stakers[msg.sender].stakedTokens.length; i++) {
-            if (
-                stakers[msg.sender].stakedTokens[i].tokenId == _tokenId
-                &&
-                stakers[msg.sender].stakedTokens[i].staker != address(0)
-            ) {
-                index = i;
-                break;
-            }
-        }
-
-        // "Remove" this token from the stakedTokens array
-        stakers[msg.sender].stakedTokens[index].staker = address(0);
-```
-
-### Rewards
-
-Rewards are calculated based on
-
-- How many NFTs the wallet has staked
-- How much time has passed
-- the `rewardsPerHour` rate configured in the contract.
-
-In order to keep track of user's rewards and how they fluctuate over time, each staker has an `unclaimedRewards` field and a `timeOfLastUpdate` field.
-
-Every time the user's rewards rate would change (e.g. they stake or withdraw an NFT), the `timeOfLastUpdate` and the `unclaimedRewards` fields are both updated.
-
-For example, if a user staked 1 NFT for 1 hour, they would earn:
-
-```
-1 * 100,000 = 100,000
-```
-
-Then, if they staked another NFT after this hour, we somehow need to know how much they earnt up to this point, because their new rewards rate will increase after this new stake.
-
-So, then it becomes:
-
-```
-1 * 100,000 * 1
-
-+
-
-2 * 100,000 * hours between this stake call and time now
-```
-
-This is how we keep track of the user's rewards despite fluctuating rewards rates as they stake and withdraw NFTs.
-
-The calculate rewards function:
-
-```solidity
-    function calculateRewards(address _staker)
-        internal
-        view
-        returns (uint256 _rewards)
-    {
-        return (((
-            ((block.timestamp - stakers[_staker].timeOfLastUpdate) *
-                stakers[_staker].amountStaked)
-        ) * rewardsPerHour) / 3600);
-    }
-```
-
-Calculate the total rewards owed to a user at the current point in time:
-
-```solidity
-    function availableRewards(address _staker) public view returns (uint256) {
-        uint256 rewards = calculateRewards(_staker) +
-            stakers[_staker].unclaimedRewards;
-        return rewards;
-    }
-```
-
-Update the information when the user `stake`s or `withdraw`s:
-
-```solidity
-        // Update the rewards for this user
-        uint256 rewards = calculateRewards(msg.sender);
-        stakers[msg.sender].unclaimedRewards += rewards;
-```
-
-Payout the user's rewards:
-
-```solidity
-    function claimRewards() external {
-        uint256 rewards = calculateRewards(msg.sender) +
-            stakers[msg.sender].unclaimedRewards;
-        require(rewards > 0, "You have no rewards to claim");
-        stakers[msg.sender].timeOfLastUpdate = block.timestamp;
-        stakers[msg.sender].unclaimedRewards = 0;
-        rewardsToken.safeTransfer(msg.sender, rewards);
-    }
-```
-
-## Deploying the smart contract
-
-We use [thirdweb deploy](https://portal.thirdweb.com/thirdweb-deploy) to deploy the Staking smart contract by running:
-
-```bash
-npx thirdweb deploy
-```
-
-This provides us with a link to deploy the contract via the [thirdweb dashboard](https://thirdweb.com/dashboard)
-
-## Front-end Application
-
-On the front-end, we connect to all three of our smart contracts and interact with them using thirdweb's SDKs.
-
-### Configuring the ThirdwebProvider
-
-We wrap our application in the `ThirdwebProvider` component to access all of the React SDK's hooks and configure the network we want to support.
-
-```jsx
-// This is the chainId your dApp will work on.
-const activeChainId = ChainId.Mumbai;
-
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ThirdwebProvider desiredChainId={activeChainId}>
-      <Component {...pageProps} />
-    </ThirdwebProvider>
-  );
-}
-```
-
-### Mint Page
-
-On the [mint.tsx](./pages/mint.tsx), we connect to our NFT Drop contract using the [useNFTDrop](https://portal.thirdweb.com/react/react.usenftdrop) hook.
-
-```jsx
-// Get the NFT Collection contract
-const nftDropContract = useNFTDrop(
-  "0x322067594DBCE69A9a9711BC393440aA5e3Aaca1" // your contract here
+```ts
+// Loading Flag
+const [loadingListings, setLoadingListings] = useState<boolean>(true);
+// Store Listings
+const [listings, setListings] = useState<(AuctionListing | DirectListing)[]>(
+  []
 );
 ```
 
-And allow user's to mint an NFT from our contract using the `claim` method:
+Then, we use the [useContract](https://docs.thirdweb.com/react/react.useContract) hook to connect to our smart contract via it's contract address.
 
-```jsx
-const tx = await nftDropContract?.claim(1); // 1 is quantity here
+```ts
+const { contract: marketplace } = useContract("your-marketplace-address-here", "marketplace");
 ```
 
-### Stake Page
+Once the marketplace is ready, we can use the `useActiveListings` hook to get all of the listings that are currently active (i.e. haven't expired or sold already).
 
-The staking page connects to all three of our contracts:
-
-1. NFTDrop contract using [useNFTDrop](https://portal.thirdweb.com/react/react.usenftdrop)
-
-```jsx
-const nftDropContract = useNFTDrop(nftDropContractAddress);
+```tsx
+const { data: listings, isLoading: loadingListings } =
+  useActiveListings(marketplace);
 ```
 
-2. Token contract using [useToken](https://portal.thirdweb.com/react/react.usetoken)
+Once we have the listings, we can display them to our users.
 
-```jsx
-const tokenContract = useToken(tokenContractAddress);
-```
+We'll leave the details of how best to display the listings up to you, but if you're looking for an example, check out the code in our [index.tsx file](./pages/index.tsx) file.
 
-3. Staking contract using [useContract](https://portal.thirdweb.com/react/react.usecontract)
+## Listing Items on the marketplace
 
-```jsx
-const { contract, isLoading } = useContract(stakingContractAddress);
-```
+We have a page called [create.tsx](./pages/create.tsx) that lets users upload existing NFTs onto the marketplace.
 
-**Loading Staked NFTs:**
+If you don't have NFTs that you can list, [you can create an NFT Collection via our dashboard](https://thirdweb.com/dashboard).
 
-```jsx
-async function loadStakedNfts() {
-  const stakedTokens = await contract?.call("getStakedTokens", address);
+Once again, we are using the `useContract` hook to connect to our marketplace smart contract via it's contract address.
 
-  // For each staked token, fetch it from the sdk
-  const stakedNfts = await Promise.all(
-    stakedTokens?.map(
-      async (stakedToken: { staker: string, tokenId: BigNumber }) => {
-        // Fetch metadata for each staked token id
-        const nft = await nftDropContract?.get(stakedToken.tokenId);
-        return nft;
-      }
-    )
+```ts
+const { contract: marketplace } = useContract(
+    "your-marketplace-address-here",
+    "marketplace"
   );
-
-  // Store the result in state, now we have an array of NFT metadata.
-  setStakedNfts(stakedNfts);
-}
 ```
 
-**Loading claimable rewards**:
+**Create Auction Type Listing:**
 
-```jsx
-async function loadClaimableRewards() {
-  const cr = await contract?.call("availableRewards", address);
-}
-```
+```ts
+async function createAuctionListing(
+  contractAddress: string,
+  tokenId: string,
+  price: string
+) {
+  try {
+    const transaction = await marketplace?.auction.createListing({
+      assetContractAddress: contractAddress, // Contract Address of the NFT
+      buyoutPricePerToken: price, // Maximum price, the auction will end immediately if a user pays this price.
+      currencyContractAddress: NATIVE_TOKEN_ADDRESS, // NATIVE_TOKEN_ADDRESS is the cryptocurency that is native to the network. i.e. Goerli Ether
+      listingDurationInSeconds: 60 * 60 * 24 * 7, // When the auction will be closed and no longer accept bids (1 Week)
+      quantity: 1, // How many of the NFTs are being listed (useful for ERC 1155 tokens)
+      reservePricePerToken: 0, // Minimum price, users cannot bid below this amount
+      startTimestamp: new Date(), // When the listing will start (now)
+      tokenId: tokenId, // Token ID of the NFT.
+    });
 
-**Staking NFTs**:
-
-In order for the smart contract to have permission to transfer NFTs from our wallet, we need to ensure it has the required `approval`, which we do by calling the `setApprovalForAll` method for our NFTs in the NFT Drop contract.
-
-```jsx
-async function stakeNft(id: BigNumber) {
-  if (!address) return;
-
-  const isApproved = await nftDropContract?.isApproved(
-    address,
-    stakingContractAddress
-  );
-  // If not approved, request approval
-  if (!isApproved) {
-    await nftDropContract?.setApprovalForAll(stakingContractAddress, true);
+    return transaction;
+  } catch (error) {
+    console.error(error);
   }
-  const stake = await contract?.call("stake", id);
 }
 ```
 
-**Withdrawing NFTs**:
+**Create Direct Type Listing**
 
-```jsx
-async function withdraw(id: BigNumber) {
-  const withdraw = await contract?.call("withdraw", id);
+```ts
+async function createDirectListing(
+  contractAddress: string,
+  tokenId: string,
+  price: string
+) {
+  try {
+    const transaction = await marketplace?.direct.createListing({
+      assetContractAddress: contractAddress, // Contract Address of the NFT
+      buyoutPricePerToken: price, // Maximum price, the auction will end immediately if a user pays this price.
+      currencyContractAddress: NATIVE_TOKEN_ADDRESS, // NATIVE_TOKEN_ADDRESS is the cryptocurency that is native to the network. i.e. Goerli Ether.
+      listingDurationInSeconds: 60 * 60 * 24 * 7, // When the auction will be closed and no longer accept bids (1 Week)
+      quantity: 1, // How many of the NFTs are being listed (useful for ERC 1155 tokens)
+      startTimestamp: new Date(0), // When the listing will start (now)
+      tokenId: tokenId, // Token ID of the NFT.
+    });
+
+    return transaction;
+  } catch (error) {
+    console.error(error);
+  }
 }
 ```
 
-**Claiming Rewards**:
+When you go to list your NFT, you'll be asked for two transactions:
 
-```jsx
-async function claimRewards() {
-  const claim = await contract?.call("claimRewards");
+1. Approve the marketplace to sell your NFTs while the NFT still lives in your wallet. (`setApprovalForAll`)
+2. Create the listing on the marketplace (`createListing`)
+
+If everything worked as planned, after you approve these two transactions, you should now see the listing you just created on the home page!
+
+## Viewing A Listing
+
+On the home page, we provide a `Link` on each listing's name to a URL that looks like: `/listing/${listing.id}`. This is using [Next JS's Dynamic Routes](https://nextjs.org/docs/routing/dynamic-routes).
+
+This way, each NFT navigates the user to a page that shows the details of the listing when they click on it, by taking them to the `/listing/[listingId]` page.
+
+When the user visits the `/listing/[listingId]` page, we can fetch the information about the listing the user is looking at! E.g if the user visits `/listing/1`, we call `marketplace.getListing(1)` and load that listings information!
+
+**Fetching The Listing**
+
+```ts
+const { contract: marketplace } = useContract("your-marketplace-address-here", "marketplace");
+
+useEffect(() => {
+  if (!listingId || !marketplace) {
+    return;
+  }
+  (async () => {
+    // Use the listingId from the router.query to get the listing the user is looking at.
+    const l = await marketplace.getListing(listingId);
+
+    setLoadingListing(false);
+    setListing(l);
+  })();
+}, [listingId, marketplace]);
+```
+
+On the `/listing/[listingId]` page, we'll want users to also be able to place bids/offers on the listing, and also buy the listing!
+
+**Creating A Bid / Offer**
+
+```ts
+async function createBidOrOffer() {
+  try {
+    // If the listing type is a direct listing, then we can create an offer.
+    if (listing?.type === ListingType.Direct) {
+      await marketplace?.direct.makeOffer(
+        listingId, // The listingId of the listing we want to make an offer for
+        1, // Quantity = 1
+        NATIVE_TOKENS[ChainId.Goerli].wrapped.address, // Wrapped Ether address on Goerli
+        bidAmount // The offer amount the user entered
+      );
+    }
+
+    // If the listing type is an auction listing, then we can create a bid.
+    if (listing?.type === ListingType.Auction) {
+      await marketplace?.auction.makeBid(listingId, bidAmount);
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 ```
+
+**Buying the NFT**
+
+```ts
+async function buyNft() {
+  try {
+    // Simple one-liner for buying the NFT
+    await marketplace?.buyoutListing(listingId, 1);
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+
+We attach these functions to the `onClick` handlers of our `Buy` and `Make Offer` buttons. If you want to see how we do that, check out the code in our [[listingId].tsx file](./pages/listing/[listingId].tsx) page.
+
+**Note:** For making offers, you'll need to have an ERC20 token. For our Goerli marketplace, that means you'll need to have wrapped ETH (wETH).
 
 ## Join our Discord!
 
