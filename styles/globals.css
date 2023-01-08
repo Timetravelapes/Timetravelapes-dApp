@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  --hello: -100%;
+  padding-bottom: 250px;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+:root {
+  --black: #1f1c21;
+  --white: #ffffff;
+  --tw-color1: #a855f7;
+  --tw-color1-hover: #9333ea;
+} /* variables*/
+
+/* Reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+  background: var(--black);
+  font-family: "Inter", sans-serif;
+  color: var(--white);
+  display: flex;
+  margin: 0;
+  text-align: center;
+  background-color: #dfa9ff;
+  border-image: round;
+  border-radius: 26px;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+.Titel {
+  margin-left: 17rem;
+  margin-top: 10rem;
+  border-style: none;
+  border-image: initial;
+  border-radius: 500px;
+    
+}
+/* Between 700px and 900px */
+@media screen and (min-width: 100px) and (max-width: 900px) {
+  .Titel {
+    width: 20%;
+    
+  }
+  
+}
+.Titel1 {
+  width: 60%;
+  height: 30%;
+  display: flex;
+  image-rendering: auto;
+  margin-left: 26rem;
+  margin-top: -28rem;
+  text-align: center;
+  color: rgb(185, 68, 253);
+}
+.Titel2 {
+  width: 60%;
+  height: 30%;
+  image-rendering: auto;
+  margin-left: 20rem;
+  margin-top: 25rem;
+  text-align: center;
+  
+}
+/* beneath 800
+*/
+@media only screen and (max-width: 800px) {
+  .header {
+    width: 30%;
+    margin-top: 16px;
+  }
+  
+}
+
+
