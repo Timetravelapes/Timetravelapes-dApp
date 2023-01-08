@@ -17,7 +17,7 @@ export default function Header() {
           <Link href="/" passHref role="button">
             <img
               src={`/Homeicon.png`}
-              alt="Logo"
+              alt="Home"
               width={40}
               height={40}
               style={{ cursor: "pointer" }}
