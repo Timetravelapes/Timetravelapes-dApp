@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThirdwebProvider desiredChainId={activeChainId}>
       <Head>
         <title>Timetravelapes dApp</title>
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
           name="description"
