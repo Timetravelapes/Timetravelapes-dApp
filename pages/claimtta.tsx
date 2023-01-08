@@ -68,7 +68,7 @@ const Claimtta: NextPage = () => {
           onClick={() => router.push(`https://red.timetravelapes.com/`)}
         >
           {/* Staking RED PILL */}
-          <img src={`/icons/red.webp`} alt="drop" />
+          <img src={`/icons/RED.webp`} alt="drop" />
           <h2 className={styles.selectBoxTitle}>BTC Red Pill</h2>
           <p className={styles.selectBoxDescription}>
             Claim <b>4500</b> TTA Token
