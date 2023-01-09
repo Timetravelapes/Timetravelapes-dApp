@@ -515,9 +515,9 @@
 }
 
 .optionSelect {
-  max-width: 50%;
-  margin-right: 30px;
-  margin-top: 50px;
+  max-width: 80%;
+  margin-right: 20px;
+  margin-top: 20px;
 }
 .optionSelectimg {
   margin-top: 50px;
@@ -525,7 +525,7 @@
 }
 
 .selectBoxDescript {
-  margin-top: 50px;
-  margin-left: -30px;
+  margin-top: 20px;
+  margin-left: -20px;
   
 }
