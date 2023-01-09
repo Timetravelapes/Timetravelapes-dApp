@@ -513,3 +513,19 @@
 .noGapBottom {
   margin-bottom: 0px;
 }
+
+.optionSelect {
+  max-width: 50%;
+  margin-right: 30px;
+  margin-top: 50px;
+}
+.optionSelectimg {
+  margin-top: 50px;
+  cursor: pointer;
+}
+
+.selectBoxDescript {
+  margin-top: 50px;
+  margin-left: -30px;
+  
+}
