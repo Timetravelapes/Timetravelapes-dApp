@@ -11,27 +11,29 @@ const Home: NextPage = () => {
       <h1 className={styles.h1}>WELCOME TO TIMETRAVELAPES DAPP</h1>
       <div className={styles.nftBoxGrid}>
       <div
-          className={styles.optionSelectBox1}
+          className={styles.optionSelectBox2}
           role="button"
           onClick={() => router.push(`/`)}
         >
           {/* Staking GREEN PILL */}
-          <p className={styles.selectBoxDescription1}>
+          <p className={styles.selectBoxDescript}>
           <img src={`/icons/Dapp.png`} alt="drop" />
+          
           </p>
         </div>
-        <p style={{ color: "#ff00f6" }}>💥STAKE💥</p><p></p><p style={{ color: "#ff00f6" }}>💥MINT💥</p><p></p><p style={{ color: "#ff00f6" }}>💥CLAIM💥</p><p></p><p style={{ color: "#ff00f6" }}>💥SALE💥</p>
-        
         <div
-          className={styles.optionSelectBox1}
+          className={styles.optionSelectimg}
           role="button"
           onClick={() => router.push(`https://snowtrace.io/token/0xa98FfDBAEE3F2b3BFCb3dbFd879a34e6aF0ba80e#code`)}
         >
           {/* Staking GREEN PILL */}
-          <p className={styles.selectBoxDescription1}>
+          <p className={styles.selectBoxDescription}>
           <img src={`/icons/tokenbanner.png`} alt="drop" />
           </p>
         </div>
+        <p className={styles.optionSelect}>💥STAKE💥  💥SALE💥  💥CLAIM💥  💥MINT💥</p>
+          
+        
 
       </div>
     </div>
