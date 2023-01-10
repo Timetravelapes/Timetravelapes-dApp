@@ -51,13 +51,12 @@ const disconnectWallet = useDisconnect();
         {address ? (
           <>
             <a
-              className={styles.secondaryButton}
+              className={styles.mainButton}
               onClick={() => disconnectWallet()}
             >
               Disconnect Wallet
             </a>
-            <p style={{ marginLeft: 8, marginRight: 8, color: "#ff00f6" }}>|</p>
-            <p>{address.slice(0, 6).concat("...").concat(address.slice(-4))}</p>
+            <p style={{ marginLeft: 950, marginRight: 8, marginBottom: 115, marginTop: -115, color: "#ff00f6" }}>{address.slice(0, 6).concat("...").concat(address.slice(-4))}</p>
           </>
         ) : (
           <a
