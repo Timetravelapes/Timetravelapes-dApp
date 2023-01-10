@@ -47,7 +47,7 @@ const disconnectWallet = useDisconnect();
           </Link>
         </div>
 
-        <div style={{ marginTop: -80, marginBottom:32, marginRight: 230, }}>
+        <div style={{ marginTop: -80, marginBottom:32, marginRight: 250,  }}>
         {address ? (
           <>
             <a
@@ -56,7 +56,7 @@ const disconnectWallet = useDisconnect();
             >
               Disconnect Wallet
             </a>
-            <p style={{ marginLeft: 950, marginRight: 8, marginBottom: 115, marginTop: -115, color: "#ff00f6" }}>{address.slice(0, 6).concat("...").concat(address.slice(-4))}</p>
+            <p style={{ marginLeft: 250, marginRight: 8, marginBottom: 70, marginTop: -80, color: "#ffffff", }}>{address.slice(0, 6).concat("...").concat(address.slice(-4))}</p>
           </>
         ) : (
           <a
