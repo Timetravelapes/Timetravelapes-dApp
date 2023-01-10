@@ -5,10 +5,13 @@ import {
   MediaRenderer,
   useActiveListings,
   useContract,
+  useAddress,
+  useMetamask,
+  useDisconnect,
+  
 } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
 import { Marketplace } from "@thirdweb-dev/sdk";
-
 
 const Market: NextPage = () => {
   const router = useRouter();
@@ -22,6 +25,10 @@ const Market: NextPage = () => {
   const { data: listings, isLoading: loadingListings } =
     useActiveListings(marketplace);
 
+
+    const address = useAddress();
+const connectWithMetamask = useMetamask();
+const disconnectWallet = useDisconnect();
   return (
     <>
       {/* Content */}
@@ -32,13 +39,37 @@ const Market: NextPage = () => {
 
         <hr className={styles.divider} />
 
-        <div style={{ marginTop: 32, marginBottom: 32 }}>
+        <div style={{ marginTop: 32, marginBottom: 32, marginLeft: 230, }}>
           <Link href="/create">
             <a className={styles.mainButton} style={{ textDecoration: "none" }}>
               Create A Listing
             </a>
           </Link>
         </div>
+
+        <div style={{ marginTop: -80, marginBottom:32, marginRight: 230, }}>
+        {address ? (
+          <>
+            <a
+              className={styles.secondaryButton}
+              onClick={() => disconnectWallet()}
+            >
+              Disconnect Wallet
+            </a>
+            <p style={{ marginLeft: 8, marginRight: 8, color: "#ff00f6" }}>|</p>
+            <p>{address.slice(0, 6).concat("...").concat(address.slice(-4))}</p>
+          </>
+        ) : (
+          <a
+            className={styles.mainButton}
+            onClick={() => connectWithMetamask()}
+          >
+            Connect Wallet
+          </a>
+          
+        )}
+      </div>
+        
 
         <div className="main">
           {
