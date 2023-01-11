@@ -1,15 +1,22 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import styles from "../styles/Home1.module.css";
+import React, {useState, useContext, useEffect } from "react";
+
+//INTERN IMPORT
+import { HeroSection } from "../components/index";
+
 
 const Home: NextPage = () => {
   const router = useRouter();
-
   return (
     <div className={styles.container}>
       {/* Top Section */}
       <h1 className={styles.h1}>WELCOME TO TIMETRAVELAPES DAPP</h1>
       <div className={styles.nftBoxGrid}>
+      <div className={styles.swapbox}>
+      <HeroSection accounts="hey" tokenData="DATA" />
+    </div>
       <div
           className={styles.optionSelectBox2}
           role="button"
@@ -41,3 +48,4 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
