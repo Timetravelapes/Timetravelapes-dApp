@@ -33,7 +33,7 @@ const Model = ({setopenModel, connectWallet }) => {
         </div>
 
         <p className={Style.Model_box_para}>
-          By connecting a wallet, you agree to TTAswap Labs'
+          By connecting a wallet, you agree to TTAswap Labs
           <br/> Terms of Service and consent to its Privacy Policy.
         </p>
       </div>
