@@ -52,8 +52,8 @@
 }
 
 .active{
-    background-color: rgb(135, 8, 253);
-    color: rgb(253, 154, 240);
+    background-image: radial-gradient( #ff45e3 0%, #8f23fb 101.52%);
+    color: rgb(255, 255, 255);
 }
 
 @media only screen and (max-width: 35em) {
