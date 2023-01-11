@@ -47,14 +47,14 @@
     content: "Yes";
     padding-left: 10px;
     background-image: radial-gradient( #ff45e3 0%, #8f23fb 101.52%);
-    color: rgb(253, 154, 240);
+    color: rgb(255, 255, 255);
 }
 
 .Toggle_inner:after{
     content: "No";
     padding-right: 10px;
     background-image: radial-gradient( #ff45e3 0%, #8f23fb 101.52%);
-    color: rgb(253, 154, 240);
+    color: rgb(255, 255, 255);
     text-align: right;
 }
 
