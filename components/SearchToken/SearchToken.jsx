@@ -15,23 +15,23 @@ const SearchToken = ({ openToken, tokens, tokenData }) => {
       name: "AVAX",
     },
     {
-      img: images.avalanche,
+      img: images.tta,
       name: "TTA",
     },
     {
-      img: images.avalanche,
+      img: images.btc,
       name: "BTC",
     },
     {
-      img: images.avalanche,
+      img: images.bnb,
       name: "BNB",
     },
     {
-      img: images.avalanche,
+      img: images.eth,
       name: "ETH",
     },
     {
-      img: images.avalanche,
+      img: images.usdt,
       name: "USDT",
     },
   ];
