@@ -8,6 +8,11 @@ import arrow from "./arrow.png";
 import arrowup from "./arrow up.png";
 import avalanche from "./avalanche.png";
 import close from "./close.png";
+import bnb from "./bnb.png";
+import tta from "./TTAToken.png";
+import btc from "./btc-logo.png";
+import eth from "./Ethereum-Logo.png";
+import usdt from "./usdt.png";
 
 export default {
     search,
@@ -20,4 +25,9 @@ export default {
     arrowup,
     avalanche,
     close,
+    bnb,
+    tta,
+    btc,
+    eth,
+    usdt,
 };
