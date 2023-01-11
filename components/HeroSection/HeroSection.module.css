@@ -62,7 +62,7 @@
 }
 
 .HeroSection_box_btn{
-    background-image: linear-gradient(to left, #ff45e3 0%, #8f23fb 101.52%);
+    background-image: radial-gradient( #ff45e3 0%, #8f23fb 91.52%);
     border: 0;
     outline: 0;
     width: 100%;
