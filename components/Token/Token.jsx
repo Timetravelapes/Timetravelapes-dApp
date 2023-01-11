@@ -19,12 +19,12 @@ const Token = ({setOpenSetting }) => {
                   onClick={()=> setOpenSetting(false)}
                 />
             </div>
-            <p className={Style.Token_box_para}>
+            <p className={Style.Token_box_para2}>
                 Slippage tolerance{""}
                 <Image src={images.lock} alt="img" width={20} height={20} />
             </p>
 
-            <div className={Style.Token_box_input}>
+            <div className={Style.Token_box_input1}>
                 <button>Auto</button>
                 <input type="text" placeholder="0.10%" />
             </div>
@@ -38,9 +38,11 @@ const Token = ({setOpenSetting }) => {
                 <input type="text" placeholder="30" />
                 <button>minutes</button>
             </div>
+            
 
-            <h2>Interface Setting</h2>
+            <h2 className={Style.Token_box_para1}>Interface Setting</h2>
 
+            
             <div className={Style.Token_box_toggle}>
                 <p className={Style.Token_box_para}>Transaction deadline</p>
                 <Toggle label="No" />
