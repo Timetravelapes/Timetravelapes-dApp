@@ -82,7 +82,7 @@
   .nftBoxGrid {
     justify-content: center;
     margin-top: -4rem;
-    margin-left: -2rem;
+    margin-left: -4rem;
     width: 100%;
   }
   .nftBox {
@@ -95,14 +95,14 @@
   .optionSelect {
     width: 90%;
     margin-top: 1px;
-    margin-right: 50px;
+    margin-right: 10px;
   }
 
   /*Dapp.png*/
   .selectBoxDescript {
     width: 50%;
     margin-top: -6rem;
-    margin-right: 15rem;
+    margin-right: 21rem;
   }
 
 
