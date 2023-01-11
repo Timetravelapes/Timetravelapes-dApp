@@ -61,6 +61,7 @@
     border-radius: 2rem;
     border-color: rgb(135, 8, 253);
     color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 
 .HeroSection_box_btn{
@@ -72,7 +73,8 @@
     padding: 1rem;
     border-radius: 2rem;
     font-size: 1.2rem;
-    color: rgb(255, 255, 255);    
+    color: rgb(255, 255, 255);
+    cursor:wait;
 }
 
 @media only screen and (max-width: 35em) {
