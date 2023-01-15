@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="keywords"
           content="Timetravelapes, dApp, Marketplace, NFT Marketplace, NFT Auction, OpenSea"
         />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
       </Head>
       <Header />
       <Component {...pageProps} />
