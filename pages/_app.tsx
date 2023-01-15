@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider desiredChainId={activeChainId}>
       <Head>
-        <link rel="shortcut icon" href="../public/favicon.ico" />
+        <link rel="shortcut icon" href="../public/logo1.png" />
         <title>Timetravelapes dApp</title>
         
         <meta
