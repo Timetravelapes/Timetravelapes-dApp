@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta
           name="description"
           content="Use Our Marketplace List Your NFTs For Sale, Accept Bids, and Buy NFTs"
-          property="og:image" content="https://i.ibb.co/LNZXy96/logo.png"
+          property="og:image=https://i.ibb.co/LNZXy96/logo.png"
         />
         
         
