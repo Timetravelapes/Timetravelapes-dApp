@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta
           name="description"
           content="Use Our Marketplace List Your NFTs For Sale, Accept Bids, and Buy NFTs"
-          rel="apple-touch-icon" href="../public/logo.png"
+          rel="apple-touch-icon" 
         />
         <meta
           name="keywords"
