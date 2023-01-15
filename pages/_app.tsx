@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           
         />
         
-        <meta property="og:image" content="https://i.ibb.co/JKL5c5y/TTALogo.png" />
+        <link rel="shortcut icon" href="/public/favicon.ico" />
         
         <meta
           name="keywords"
