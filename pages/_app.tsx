@@ -14,16 +14,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThirdwebProvider desiredChainId={activeChainId}>
       <Head>
         <title>Timetravelapes dApp</title>
-        <meta property="og:image" content="https://i.ibb.co/LNZXy96/logo.png" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="40" />
-        <meta property="og:image:height" content="30" />
-        <meta property="og:image:alt" content="TTA" />
-        <meta name="viewport" content="width=device-width, initial-scale=2.0" />
+        
         <meta
           name="description"
           content="Use Our Marketplace List Your NFTs For Sale, Accept Bids, and Buy NFTs"
-         
+          property="og:image" content="https://i.ibb.co/LNZXy96/logo.png"
         />
         
         
