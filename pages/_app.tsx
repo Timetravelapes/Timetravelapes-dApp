@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:image:width" content="400" />
         <meta property="og:image:height" content="300" />
         <meta property="og:image:alt" content="TTA" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=2.0" />
         <meta
           name="description"
           content="Use Our Marketplace List Your NFTs For Sale, Accept Bids, and Buy NFTs"
