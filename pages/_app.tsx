@@ -21,11 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
          
         />
         
-        <meta
-          name="icon"
-          href="../public/logo.png"
-          type="image/png"
-        />
+        
         
         <meta
           name="keywords"
