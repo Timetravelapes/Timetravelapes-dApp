@@ -24,9 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="keywords"
           content="Timetravelapes, dApp, Marketplace, NFT Marketplace, NFT Auction, OpenSea"
         />
-        <meta property=”og:locale” content=”en_GB” />
-        <meta property=”og:locale:alternate” content=”fr_FR” />
-        <meta property=”og:locale:alternate” content=”es_ES” />
+        
       </Head>
       <Header />
       <Component {...pageProps} />
