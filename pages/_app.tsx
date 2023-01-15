@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           
         />
         
-        
+        {/* <link rel="shortcut icon" href={favicon} /> */}
         
         <meta
           name="keywords"
