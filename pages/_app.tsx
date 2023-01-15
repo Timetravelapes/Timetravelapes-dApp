@@ -20,7 +20,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="Use Our Marketplace List Your NFTs For Sale, Accept Bids, and Buy NFTs"
          
         />
-        <meta property="image" content="../public/icons/favicon.ico" />
+        <meta property="og:image" content="../public/icons/favicon.ico" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="300" />
+        <meta property="og:image:alt" content="TTA" />
         
         
         <meta
