@@ -17,13 +17,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
           name="description"
-          content="Use Our Marketplace List Your NFTs For Sale, Accept Bids, and Buy NFTs"
+          content="se Our Marketplace List Your NFTs For Sale, Accept Bids, and Buy NFTs"
         />
         <meta
           name="keywords"
           content="Timetravelapes, dApp, Marketplace, NFT Marketplace, NFT Auction, OpenSea"
         />
-        <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
+        <link rel="apple-touch-icon" href="../public/logo.png" />
       </Head>
       <Header />
       <Component {...pageProps} />
