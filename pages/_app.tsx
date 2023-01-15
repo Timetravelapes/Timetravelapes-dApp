@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           
         />
         
-        
+        <link rel="shortcut icon" href="https://i.ibb.co/YZ11TPJ/Banner.png" />
         
         <meta
           name="keywords"
