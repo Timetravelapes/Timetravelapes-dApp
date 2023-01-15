@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           
         />
         
-        <meta property="og:image" content="https://ia.media-imdb.com/images/rock.jpg" />
+        <meta property="og:image" content="https://i.ibb.co/JKL5c5y/TTALogo.png" />
         
         <meta
           name="keywords"
